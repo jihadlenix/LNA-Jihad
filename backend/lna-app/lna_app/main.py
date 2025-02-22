@@ -1,14 +1,12 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="LNA App", description="this is the LNA App")
+from lna_app.api import news
 
-@app.get("/")
-async def root():
-    return {
-        "message": "Nothing to see here! Click here to join the party -> http://localhost:8000/hello-world 🎉",
-        "docs": "Check out the API docs at http://localhost:8000/docs"
-    }
+app: FastAPI = FastAPI()
 
-@app.get("/hello-world")
-async def hello_world():
-    return {"message": "Hello World"}
+app.include_router(news.router, prefix="/news")
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
