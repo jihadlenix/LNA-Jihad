@@ -1,14 +1,9 @@
 from datetime import datetime
-from enum import Enum
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from pydantic import BaseModel, EmailStr, Field
 
-
-class Language(str, Enum):
-    ENGLISH = "en"
-    ARABIC = "ar"
-    UNKNOWN = "unknown"
+from lna_app.core.types import Language, UUIDstr
 
 
 class UserPreferences(BaseModel):
@@ -21,7 +16,7 @@ class UserPreferences(BaseModel):
         language: The preferred language in which the user wants to read news.
     """
 
-    source_ids: list[UUID] = Field(
+    source_ids: list[UUIDstr] = Field(
         default_factory=list, description="List of Source IDs that the user follows."
     )
     language: Language = Field(
@@ -39,7 +34,7 @@ class User(BaseModel):
         preferences: User preferences, including source subscriptions and language.
     """
 
-    id: UUID = Field(
+    id: UUIDstr = Field(
         default_factory=uuid4, description="Unique identifier for the user (UUID)."
     )
     email: EmailStr = Field(..., description="User's email address.")
@@ -59,7 +54,7 @@ class Source(BaseModel):
         urls: List of URLs associated with the source (e.g., homepage, RSS feed).
     """
 
-    id: UUID = Field(
+    id: UUIDstr = Field(
         default_factory=uuid4, description="Unique identifier for the source (UUID)."
     )
     name: str = Field(
@@ -84,10 +79,10 @@ class Article(BaseModel):
         language: Language of the article, defaults to UNKNOWN if undetermined.
     """
 
-    id: UUID = Field(
+    id: UUIDstr = Field(
         default_factory=uuid4, description="Unique identifier for the article (UUID)."
     )
-    source_id: UUID = Field(
+    source_id: UUIDstr = Field(
         ..., description="Reference to the Source.id this article belongs to."
     )
     url: str = Field(..., description="Direct URL to the published article.")
@@ -116,7 +111,7 @@ class AggregatedStory(BaseModel):
         article_ids: List of article IDs (UUIDs) that belong to this aggregated story.
     """
 
-    id: UUID = Field(
+    id: UUIDstr = Field(
         default_factory=uuid4,
         description="Unique identifier for the aggregated story (UUID).",
     )
@@ -128,7 +123,7 @@ class AggregatedStory(BaseModel):
     publish_date: datetime = Field(
         ..., description="Representative publish date (e.g., earliest article date)."
     )
-    article_ids: list[UUID] = Field(
+    article_ids: list[UUIDstr] = Field(
         ..., description="List of UUIDs referencing articles in this story cluster."
     )
 

@@ -29,6 +29,11 @@ poetry install
 1. Activate the poetry environment:
 For details, see the [Poetry documentation on environment activation](https://python-poetry.org/docs/managing-environments/#bash-csh-zsh)
 
+   a. On macOS/Linux:
+   ```bash
+   eval $(poetry env activate)
+   ```
+
 2. Start the development server:
 
 **On macOS/Linux:**
@@ -42,3 +47,12 @@ python -m uvicorn lna_app.main:app --reload
 ```
 
 The application will be available at `http://localhost:8000`
+
+### Running Tests
+
+To run the tests:
+```bash
+poetry run python -W all -m unittest discover -v tests
+```
+
+The `-W all` flag enables all warnings, which helps catch potential issues early in development.
