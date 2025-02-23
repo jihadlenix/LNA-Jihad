@@ -52,7 +52,7 @@ The application will be available at `http://localhost:8000`
 
 To run the tests:
 ```bash
-poetry run python -W all -m unittest discover -v tests
+python -W all -m unittest discover -v tests
 ```
 
 The `-W all` flag enables all warnings, which helps catch potential issues early in development.
