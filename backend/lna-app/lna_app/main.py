@@ -16,7 +16,7 @@ app.include_router(news.router, prefix="/news")
 # Adjust the CORS middleware to match your actual frontend deployment URL
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://yourfrontend.azurewebsites.net"],  # Change to your deployed frontend URL
+    allow_origins=["https://lnaapp-fjgqecfra5hsaff0.uaenorth-01.azurewebsites.net"], # Change to your deployed frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
