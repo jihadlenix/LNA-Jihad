@@ -31,7 +31,8 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install $(grep -v 'pywinpty' requirements.txt)
+          cat requirements.txt | grep -v 'pywinpty' > temp_requirements.txt
+          pip install -r temp_requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
