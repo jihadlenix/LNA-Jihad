@@ -31,13 +31,12 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cat requirements.txt | grep -v 'pywinpty' > temp_requirements.txt
-          pip install -r temp_requirements.txt
+          pip install $(grep -v 'pywinpty' requirements.txt)
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r release.zip . -x "venv/*"
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
