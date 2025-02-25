@@ -1,32 +1,27 @@
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
-from lna_app.api import news
-from lna_app.db.session import init_database
+from fastapi.middleware.cors import CORSMiddleware
+from .api import news
 
-
-app = FastAPI(title="Simple LNA API")
+app = FastAPI(title="LNA API")
 
 @app.get("/")
 async def root():
     return {"message": "Hi"}
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Lifespan context manager for FastAPI application.
-
-    Handles startup and shutdown events:
-    - Startup: Initialize database and Beanie ODM
-    - Shutdown: Any cleanup if needed
-    """
-    # Startup
-    await init_database()
-    yield
-    # Shutdown (if we need cleanup later)
-
-
-app = FastAPI(
-    title="LNA API",
-    lifespan=lifespan,
-)
+# Remove or comment out the lifespan setup that includes database initialization
+# This makes the application initialization simpler and independent of the database
 
 app.include_router(news.router, prefix="/news")
+
+# Adjust the CORS middleware to match your actual frontend deployment URL
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://yourfrontend.azurewebsites.net"],  # Change to your deployed frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
