@@ -6,9 +6,9 @@ import uvicorn
 app = FastAPI(title="Simple LNA API")
 
 origins = [
-    "http://localhost:5173",  # Local frontend address
-    "https://lnafrontend.vercel.app",  # Deployed frontend address
-    "http://127.0.0.1:5173"  # Adding localhost IP might help
+    "https://localhost:5173",  # If using HTTPS locally
+    "http://localhost:5173",  # If still using HTTP locally
+    "https://lnafrontend.vercel.app",
 ]
 
 app.add_middleware(
