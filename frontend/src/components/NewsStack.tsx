@@ -38,7 +38,7 @@ const NewsStack = ({ language }: NewsStackProps) => {
   const [newsItems, setNewsItems] = useState<News[]>([]);  // Use generic to define state type
 
   useEffect(() => {
-    axios.get('https://lebna-e8dhd0h3cfdyfwaz.uaenorth-01.azurewebsites.net/news/aggregated-stories/')
+    axios.get('https://lebna-e8dhd0h3cfdyfwaz.uaenorth-01.azurewebsites.net/news/aggregated-stories')
       .then(response => {
         // Transform API data to News instances if needed
         setNewsItems(response.data.map((item: any) => new News(

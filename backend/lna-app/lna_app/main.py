@@ -2,15 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from .api.news import router as news_router  # Ensure this path is correct
 
 app = FastAPI(title="Simple LNA API")
 
-# Correcting CORS settings to be included in the same FastAPI app instance
 origins = [
     "http://localhost:5173",  # Local frontend address
-    "https://lnafrontend.vercel.app", # Deployed frontend address]
-     "http://127.0.0.1:5173" 
+    "https://lnafrontend.vercel.app",  # Deployed frontend address
+    "http://127.0.0.1:5173"  # Adding localhost IP might help
 ]
 
 app.add_middleware(
@@ -21,7 +19,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(news_router, prefix="/news")  # Include your router with the prefix
+from .api.news import router as news_router
+
+app.include_router(news_router, prefix="/news")
 
 @app.get("/")
 async def root():
